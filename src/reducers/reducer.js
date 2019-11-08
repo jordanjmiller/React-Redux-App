@@ -1,18 +1,11 @@
-// import { ADD_FEATURE, REMOVE_FEATURE} from '../actions/actions.js'
-
+import { FETCH_POKEMON_START, FETCH_POKEMON_SUCCESS, FETCH_POKEMON_FAIL, FETCH_POKEMON_COMPLETED } from '../actions/actions.js';
 
 const initialState = {
     caught: 0,
     total: 151,
     loaded: false,
-    status: '',
-    test: 'test',
+    isFetching: false,
     pokemon: [],
-    pokemon: {
-        id: '',
-        name: '',
-        img: '',
-    },
   };
 
 
@@ -30,6 +23,35 @@ export const reducer= (state = initialState, action) => {
             console.log('REMOVING FEATURE: ', action.payload);
             return {
             }
+        case FETCH_POKEMON_START:
+            console.log('FETCH_POKEMON_START', state);
+            return {
+            ...state,
+            isFetching: true,
+            error: ''
+            };
+        case FETCH_POKEMON_SUCCESS:
+            console.log('FETCH_POKEMON_SUCCESS', state);
+            let unsortedArray = [...state.pokemon, action.payload];
+            let sortedArray = unsortedArray.sort((a, b)=> {return a.id-b.id;});
+            return {
+            ...state,
+            pokemon: sortedArray,
+            };
+        case FETCH_POKEMON_FAIL:
+            console.log('FETCH_POKEMON_FAIL: ERROR: ', action.payload);
+            return {
+            ...state,
+            error: action.payload
+            };
+        case FETCH_POKEMON_COMPLETED:
+            console.log('FETCH_POKEMON_COMPLETED', state);
+            return {
+            ...state,
+            isFetching: false,
+            loaded: true,
+            error: ''
+            };
         default: return state;
   }
 }

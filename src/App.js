@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import './App.css';
 import PokeList from './components/PokeList';
-import { saveState } from './utils/localStorage';
+import { getPokemon, checkComplete } from './actions/actions';
+import { loadState, saveState } from './utils/localStorage.js';
 
 
 function App(props) {
@@ -13,18 +14,27 @@ function App(props) {
   const [charmanderImg, setCharmanderImg] = useState('');
 
   axios.get('https://pokeapi.co/api/v2/pokemon/')
-    .then(res => { console.log(res); 
+    .then(res => { //console.log(res); 
       axios.get(res.data.results[3].url)
-        .then(res => { console.log(res.data); 
-          console.log(res.data.sprites.front_default);
+        .then(res => { //console.log(res.data); 
+          // console.log(res.data.sprites.front_default);
           setCharmanderImg(res.data.sprites.front_default); })
         .catch(err => console.log(err)) })
     .catch(err => console.log(err));
 
+    if (props.loaded === false && props.isFetching === false){
+      props.getPokemon();
+    }
+
+    if (props.isFetching && props.pokemon.length === 151){
+      props.checkComplete();
+    }
+
   return (
     <div className="App">
-      <PokeList caught={props.caught} total={props.total}/>
-      <img src={charmanderImg} alt='charmander'/>
+      <p>{props.caught}/{props.total} Pokemon caught</p>
+      <button>Prev</button><button>Next</button>
+      <PokeList pokemon={props.pokemon}/>
     </div>
   )
 }
@@ -32,11 +42,17 @@ function App(props) {
 
 const mapStateToProps = state => {
   console.log('mapstatetoprops: ', state);
-  // saveState(state);
+  let persistedState = loadState();
+  if (!persistedState){
+    saveState(state);
+  }
   return {
     caught: state.caught,
     total: state.total,
+    loaded: state.loaded,
+    pokemon: state.pokemon,
+    isFetching: state.isFetching,
   }
 }
 
-export default connect(mapStateToProps, {})(App)
+export default connect(mapStateToProps, { getPokemon, checkComplete })(App)
