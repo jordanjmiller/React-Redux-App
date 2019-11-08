@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.App-logo {
+/* .App-logo {
   height: 40vmin;
 }
 
@@ -19,6 +19,17 @@
 
 .App-link {
   color: #09d3ac;
+} */
+body{
+  background-color: steelblue;
+}
+.header{
+  position: sticky;
+  top: 0; 
+  background-color: lightsteelblue;
+  border: 1px solid black;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .pokeList{
@@ -28,8 +39,17 @@
   justify-content: space-evenly;
 }
 
-.pokeCard{
-  margin: 0 20px;
+.caught{
+  margin: 5px 20px;
+  padding-bottom: 10px;
   border: 1px solid black;
   width: 150px;
+  background-color: #09d3ac;
+}
+.notCaught{
+  margin: 5px 20px;
+  padding-bottom: 10px;
+  border: 1px solid black;
+  width: 150px;
+  background-color: lightcoral;
 }

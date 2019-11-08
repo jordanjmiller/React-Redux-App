@@ -1,21 +1,13 @@
 
 import axios from 'axios';
 
-export const LOAD_ALL_POKEMON = 'LOAD_ALL_POKEMON'; //action type
 export const FETCH_POKEMON_START = 'FETCH_POKEMON_START';
 export const FETCH_POKEMON_SUCCESS = 'FETCH_POKEMON_SUCCESS';
 export const FETCH_POKEMON_FAIL = 'FETCH_POKEMON_FAIL';
 export const FETCH_POKEMON_COMPLETED = 'FETCH_POKEMON_COMPLETED';
-
-
-export const loadAllPokemon = () => {
-// dispatch an action here to add an item
-    console.log('loadAllPokemon firing');
-    return{ //action
-        type: LOAD_ALL_POKEMON,
-        payload: null
-    }
-};
+export const CATCH_POKEMON = 'CATCH_POKEMON';
+export const UPDATE_COUNT = 'UPDATE_COUNT';
+export const DISPLAY_TOGGLE = 'DISPLAY_TOGGLE';
 
 export const getPokemon = () => dispatch => {
     console.log('getPokemon firing');
@@ -41,5 +33,19 @@ export const getPokemon = () => dispatch => {
 export const checkComplete = () => {
         return { type: FETCH_POKEMON_COMPLETED, payload: null} ;
 }
+
+export const catchPokemon = (poke) => {
+        return { type: CATCH_POKEMON, payload: poke} ;
+}
+
+export const updateCount = (count) => {
+    return { type: UPDATE_COUNT, payload: count} ;
+}
+
+export const displayToggle = (filterType) => {
+    console.log('displayToggle action: ', filterType);
+    return { type: DISPLAY_TOGGLE, payload: filterType} ;
+}
+
 
 // catch/release toggle button on all pokemans, open/closed pokeball from caught true/false
