@@ -13,8 +13,7 @@ export const getPokemon = () => dispatch => {
     console.log('getPokemon firing');
     dispatch({ type: FETCH_POKEMON_START, payload: null });
     for (let i = 1; i < 152; i++){
-        axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${i}`)
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
         .then(res =>{
             console.log('axios: fetched: ', i, res.data.name);
             let pokemon = {

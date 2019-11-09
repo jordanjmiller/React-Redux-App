@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import './App.css';
 import PokeList from './components/PokeList';
 import { getPokemon, checkComplete, updateCount, displayToggle } from './actions/actions';
@@ -9,18 +8,23 @@ import { loadState, saveState } from './utils/localStorage.js';
 
 function App(props) {
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const handleChange = event => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    setSearchResults(props.pokemon.filter(char =>
+      char.name.toLowerCase().includes(searchTerm)));
+      console.log(searchResults);
+  }, [searchTerm])
+
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+
 // get counts: map through each results array, then if i=0 grab first pokemon's id after pulling its data, same for last's.
-
-  const [charmanderImg, setCharmanderImg] = useState('');
-
-  axios.get('https://pokeapi.co/api/v2/pokemon/')
-    .then(res => { //console.log(res); 
-      axios.get(res.data.results[3].url)
-        .then(res => { //console.log(res.data); 
-          // console.log(res.data.sprites.front_default);
-          setCharmanderImg(res.data.sprites.front_default); })
-        .catch(err => console.log(err)) })
-    .catch(err => console.log(err));
 
     if (props.loaded === false && props.isFetching === false){
       props.getPokemon();
@@ -36,10 +40,18 @@ function App(props) {
       }
       else {return count}
     }, 0);
+
+    let checker = false;
     if (props.caught !== caughtCount)
     {
       props.updateCount(caughtCount);
+      checker = true;
     }
+    useEffect(() => { //this allows searchResults to update if a pokemon is caught/released and changed inside state.pokemon.
+    setSearchResults(props.pokemon.filter(char =>
+      char.name.toLowerCase().includes(searchTerm)));
+      console.log(searchResults);
+    }, [checker])
 
     const changeFilterType = () => {
       switch(props.filterType){
@@ -64,7 +76,13 @@ function App(props) {
     <div className="App">
       <div className='header'>
         <p>{props.caught}/{props.total} Pokemon caught</p>
-        <button onClick={changeFilterType}>Filter by: {props.filterType}</button>
+        <div className='secondDiv'>
+          <button onClick={changeFilterType}>Filter by: {props.filterType}</button>
+          <div>
+            <input type="text" placeholder="Search by name" value={searchTerm} onChange={handleChange} />
+            <button onClick={clearSearch}>Clear</button>
+          </div>
+        </div>
       </div>
       <div>
         {(()=>{if (props.caught === props.total){
@@ -72,8 +90,20 @@ function App(props) {
         }})()}
         </div>
       
-      {/* <button>Prev</button><button>Next</button> */}
-      <PokeList filterType={props.filterType} pokemon={props.pokemon}/>
+      {(()=>{
+        if (searchTerm !== ''){
+          if (searchResults.length === 0){
+            return <h1>No results found</h1>
+          }
+          else{
+            console.log(searchResults);
+            return <PokeList filterType={props.filterType} pokemon={searchResults}/>;
+          }
+        }
+        else{
+          return <PokeList filterType={props.filterType} pokemon={props.pokemon}/>;
+        }
+      })()}
     </div>
   )
 }

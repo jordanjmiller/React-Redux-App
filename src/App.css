@@ -30,6 +30,24 @@ body{
   border: 1px solid black;
   padding-bottom: 20px;
   margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.header p{
+  width: 80%;
+  margin: 0 auto;
+}
+.secondDiv{
+  width: 440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+.secondDiv input{
+  border: 1px solid black;
 }
 
 .pokeList{
