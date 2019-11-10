@@ -5,7 +5,7 @@ import { catchPokemon } from '../actions/actions.js';
 
 
 const PokeList = (props) => {
-    console.log('PokeList Props: ', props)
+    //console.log('PokeList Props: ', props)
     return(
         <div className='pokeList'>
             {/* {props.pokemon && props.pokemon.map((poke) => {return <PokeCard key={poke.id} pokemon={poke} catchPokemon={props.catchPokemon}/>})} */}
@@ -18,15 +18,17 @@ const PokeList = (props) => {
                         // console.log('display caught')
                         return props.pokemon.map((poke) => {
                             if (poke.caught){
-                                return <PokeCard key={poke.id} pokemon={poke} catchPokemon={props.catchPokemon}/>
-                        }});
+                                return <PokeCard key={poke.id} pokemon={poke} catchPokemon={props.catchPokemon}/>}
+                            else { return null; }
+                    });
                     }
                     else if(props.filterType === 'Display Uncaught'){
                         // console.log('display uncaught')
                         return props.pokemon.map((poke) => {
                             if (!poke.caught){
-                                return <PokeCard key={poke.id} pokemon={poke} catchPokemon={props.catchPokemon}/>
-                        }});
+                                return <PokeCard key={poke.id} pokemon={poke} catchPokemon={props.catchPokemon}/>}
+                            else { return null; }
+                            });
                     } 
             })()}
         </div>

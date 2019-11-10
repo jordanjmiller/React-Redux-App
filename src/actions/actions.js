@@ -10,12 +10,12 @@ export const UPDATE_COUNT = 'UPDATE_COUNT';
 export const DISPLAY_TOGGLE = 'DISPLAY_TOGGLE';
 
 export const getPokemon = () => dispatch => {
-    console.log('getPokemon firing');
+    //console.log('getPokemon firing');
     dispatch({ type: FETCH_POKEMON_START, payload: null });
     for (let i = 1; i < 152; i++){
         axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
         .then(res =>{
-            console.log('axios: fetched: ', i, res.data.name);
+            //console.log('axios: fetched: ', i, res.data.name);
             let pokemon = {
                 id: res.data.id,
                 name: res.data.name,
@@ -42,7 +42,7 @@ export const updateCount = (count) => {
 }
 
 export const displayToggle = (filterType) => {
-    console.log('displayToggle action: ', filterType);
+    //console.log('displayToggle action: ', filterType);
     return { type: DISPLAY_TOGGLE, payload: filterType} ;
 }
 

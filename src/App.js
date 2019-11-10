@@ -17,8 +17,8 @@ function App(props) {
   useEffect(() => {
     setSearchResults(props.pokemon.filter(char =>
       char.name.toLowerCase().includes(searchTerm)));
-      console.log(searchResults);
-  }, [searchTerm])
+      //console.log(searchResults);
+  }, [searchTerm, props.pokemon]);
 
   const clearSearch = () => {
     setSearchTerm('');
@@ -41,30 +41,23 @@ function App(props) {
       else {return count}
     }, 0);
 
-    let checker = false;
     if (props.caught !== caughtCount)
     {
       props.updateCount(caughtCount);
-      checker = true;
     }
-    useEffect(() => { //this allows searchResults to update if a pokemon is caught/released and changed inside state.pokemon.
-    setSearchResults(props.pokemon.filter(char =>
-      char.name.toLowerCase().includes(searchTerm)));
-      console.log(searchResults);
-    }, [checker])
 
     const changeFilterType = () => {
       switch(props.filterType){
         case 'Display All':
-          console.log('changeFilterType: Display All firing');
+          //console.log('changeFilterType: Display All firing');
           props.displayToggle('Display Caught');
           return null;
         case 'Display Caught':
-            console.log('changeFilterType: Display Caught firing');
+            //console.log('changeFilterType: Display Caught firing');
             props.displayToggle('Display Uncaught');
           return null;
         case 'Display Uncaught':
-            console.log('changeFilterType: Display Uncaught firing');
+            //console.log('changeFilterType: Display Uncaught firing');
             props.displayToggle('Display All');
             return null;
         default: console.log('changeFilterType Error: Default case reached');
@@ -96,7 +89,7 @@ function App(props) {
             return <h1>No results found</h1>
           }
           else{
-            console.log(searchResults);
+            //console.log(searchResults);
             return <PokeList filterType={props.filterType} pokemon={searchResults}/>;
           }
         }
@@ -110,7 +103,7 @@ function App(props) {
 
 
 const mapStateToProps = state => {
-  console.log('mapstatetoprops: ', state);
+  //console.log('mapstatetoprops: ', state);
   let persistedState = loadState();
   if (!persistedState){
     saveState(state);

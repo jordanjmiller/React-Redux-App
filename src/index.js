@@ -11,7 +11,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 let persistedState = loadState();
-console.log('index.js persistedState: ', persistedState);
+//console.log('index.js persistedState: ', persistedState);
 
 const store = createStore(reducer, persistedState, applyMiddleware(thunk));
 store.subscribe(() => {

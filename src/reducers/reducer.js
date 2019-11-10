@@ -12,18 +12,18 @@ const initialState = {
 
 
 export const reducer = (state = initialState, action) => {
-    console.log('Reducer initialState: ', initialState);
-    console.log('reducer firing: ', action);
+    //console.log('Reducer initialState: ', initialState);
+    //console.log('reducer firing: ', action);
     switch(action.type) {
         case FETCH_POKEMON_START:
-            console.log('FETCH_POKEMON_START', state);
+            //console.log('FETCH_POKEMON_START', state);
             return {
                 ...state,
                 isFetching: true,
                 error: ''
             };
         case FETCH_POKEMON_SUCCESS:
-            console.log('FETCH_POKEMON_SUCCESS', state);
+            //console.log('FETCH_POKEMON_SUCCESS', state);
             let unsortedArray = [...state.pokemon, action.payload];
             let sortedArray = unsortedArray.sort((a, b)=> {return a.id-b.id;});
             return {
@@ -31,13 +31,13 @@ export const reducer = (state = initialState, action) => {
                 pokemon: sortedArray,
             };
         case FETCH_POKEMON_FAIL:
-            console.log('FETCH_POKEMON_FAIL: ERROR: ', action.payload);
+            //console.log('FETCH_POKEMON_FAIL: ERROR: ', action.payload);
             return {
                 ...state,
                 error: action.payload
             };
         case FETCH_POKEMON_COMPLETED:
-            console.log('FETCH_POKEMON_COMPLETED', state);
+            //console.log('FETCH_POKEMON_COMPLETED', state);
             return {
                 ...state,
                 isFetching: false,
@@ -45,7 +45,7 @@ export const reducer = (state = initialState, action) => {
                 error: ''
             };
         case CATCH_POKEMON:{
-            console.log('reducer CATCH_POKEMON firing')
+            //console.log('reducer CATCH_POKEMON firing')
             let filteredArray = state.pokemon.filter(poke => {return poke.id !== action.payload.id});
             action.payload.caught = !action.payload.caught;
             let unsortedArray = [...filteredArray, action.payload];
@@ -56,19 +56,20 @@ export const reducer = (state = initialState, action) => {
             };
         }
         case UPDATE_COUNT:{
-            console.log('reducer UPDATE_COUNT firing');
+            //console.log('reducer UPDATE_COUNT firing');
             return{
                 ...state,
                 caught: action.payload,
             }
         }
         case DISPLAY_TOGGLE:{
-            console.log('DISPLAY_TOGGLE TO: ', action.payload);
+            //console.log('DISPLAY_TOGGLE TO: ', action.payload);
             return{
                 ...state,
                 filterType: action.payload,
             }
         }
-        default: console.log('REDUCER DEFAULT'); return state;
+        default: //console.log('REDUCER DEFAULT'); 
+        return state;
   }
 }
