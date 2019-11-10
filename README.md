@@ -1,6 +1,7 @@
 Need to dos: deploy to zeit
 write doc and comments explaining what has been done/how/why
-add about page that includes doc (also react router)
+add about page that includes doc and link to repo (also react router)
+save all images to localstorage to cut down on slamming the API
 
 ideas:
 Generation checkboxes- 
