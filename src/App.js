@@ -16,7 +16,7 @@ function App(props) {
 
   useEffect(() => {
     setSearchResults(props.pokemon.filter(char =>
-      char.name.toLowerCase().includes(searchTerm)));
+      char.name.toLowerCase().includes(searchTerm.toLowerCase())));
       //console.log(searchResults);
   }, [searchTerm, props.pokemon]);
 
